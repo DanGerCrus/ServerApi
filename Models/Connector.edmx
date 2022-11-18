@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище OperatorModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Abonents">
+          <Key>
+            <PropertyRef Name="id_abonent" />
+          </Key>
+          <Property Name="id_abonent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="personal_schet" Type="nvarchar" MaxLength="10" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="passport_data" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="adress" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="number_phone" Type="nvarchar" MaxLength="15" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Abonents_equipment">
+          <Key>
+            <PropertyRef Name="id_equipment" />
+          </Key>
+          <Property Name="id_equipment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="75" Nullable="false" />
+          <Property Name="count_portov" Type="int" Nullable="false" />
+          <Property Name="standart_transmission" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="speed_transmission" Type="float" Nullable="false" />
+          <Property Name="id_abonent" Type="int" />
+        </EntityType>
+        <EntityType Name="Applications">
+          <Key>
+            <PropertyRef Name="id_application" />
+          </Key>
+          <Property Name="id_application" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_abonent" Type="int" Nullable="false" />
+          <Property Name="id_name_service" Type="int" Nullable="false" />
+          <Property Name="date_create" Type="date" Nullable="false" />
+          <Property Name="status" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="type_problem" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="opisanie" Type="nvarchar" MaxLength="100" />
+          <Property Name="date_end" Type="date" />
+          <Property Name="id_staff" Type="int" />
+        </EntityType>
+        <EntityType Name="Contracts">
+          <Key>
+            <PropertyRef Name="id_cotract" />
+          </Key>
+          <Property Name="id_cotract" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="date_start" Type="date" Nullable="false" />
+          <Property Name="date_end" Type="date" />
+          <Property Name="reason_end" Type="nvarchar" MaxLength="100" />
+          <Property Name="id_abonent" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="name_service">
+          <Key>
+            <PropertyRef Name="id_name_service" />
+          </Key>
+          <Property Name="id_name_service" Type="int" Nullable="false" />
+          <Property Name="name_service" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name_role" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="id_service" />
+          </Key>
+          <Property Name="id_service" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_abonent" Type="int" Nullable="false" />
+          <Property Name="id_name_service" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="id_staff" />
+          </Key>
+          <Property Name="id_staff" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MIddleName" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="65" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="id_role" Type="int" Nullable="false" />
+          <Property Name="photo" Type="varbinary(max)" />
+          <Property Name="otpusk" Type="bit" />
+          <Property Name="email" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Abonents_equipment_Abonents">
+          <End Role="Abonents" Type="Self.Abonents" Multiplicity="0..1" />
+          <End Role="Abonents_equipment" Type="Self.Abonents_equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Abonents">
+              <PropertyRef Name="id_abonent" />
+            </Principal>
+            <Dependent Role="Abonents_equipment">
+              <PropertyRef Name="id_abonent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Applications_Abonents">
+          <End Role="Abonents" Type="Self.Abonents" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Abonents">
+              <PropertyRef Name="id_abonent" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="id_abonent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Applications_name_service">
+          <End Role="name_service" Type="Self.name_service" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="name_service">
+              <PropertyRef Name="id_name_service" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="id_name_service" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Applications_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id_staff" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="id_staff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contracts_Abonents">
+          <End Role="Abonents" Type="Self.Abonents" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Contracts" Type="Self.Contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Abonents">
+              <PropertyRef Name="id_abonent" />
+            </Principal>
+            <Dependent Role="Contracts">
+              <PropertyRef Name="id_abonent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Services_Abonents">
+          <End Role="Abonents" Type="Self.Abonents" Multiplicity="1" />
+          <End Role="Services" Type="Self.Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Abonents">
+              <PropertyRef Name="id_abonent" />
+            </Principal>
+            <Dependent Role="Services">
+              <PropertyRef Name="id_abonent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Services_name_service">
+          <End Role="name_service" Type="Self.name_service" Multiplicity="1" />
+          <End Role="Services" Type="Self.Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="name_service">
+              <PropertyRef Name="id_name_service" />
+            </Principal>
+            <Dependent Role="Services">
+              <PropertyRef Name="id_name_service" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище OperatorModelContainer">
+          <EntitySet Name="Abonents" EntityType="Self.Abonents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Abonents_equipment" EntityType="Self.Abonents_equipment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Applications" EntityType="Self.Applications" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contracts" EntityType="Self.Contracts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="name_service" EntityType="Self.name_service" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Services" EntityType="Self.Services" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Abonents_equipment_Abonents" Association="Self.FK_Abonents_equipment_Abonents">
+            <End Role="Abonents" EntitySet="Abonents" />
+            <End Role="Abonents_equipment" EntitySet="Abonents_equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Applications_Abonents" Association="Self.FK_Applications_Abonents">
+            <End Role="Abonents" EntitySet="Abonents" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Applications_name_service" Association="Self.FK_Applications_name_service">
+            <End Role="name_service" EntitySet="name_service" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Applications_Staff" Association="Self.FK_Applications_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contracts_Abonents" Association="Self.FK_Contracts_Abonents">
+            <End Role="Abonents" EntitySet="Abonents" />
+            <End Role="Contracts" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Services_Abonents" Association="Self.FK_Services_Abonents">
+            <End Role="Abonents" EntitySet="Abonents" />
+            <End Role="Services" EntitySet="Services" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Services_name_service" Association="Self.FK_Services_name_service">
+            <End Role="name_service" EntitySet="name_service" />
+            <End Role="Services" EntitySet="Services" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Roles" Association="Self.FK_Staff_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OperatorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Abonents">
+          <Key>
+            <PropertyRef Name="id_abonent" />
+          </Key>
+          <Property Name="id_abonent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="personal_schet" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="passport_data" Type="String" MaxLength="25" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="adress" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="number_phone" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Abonents_equipment" Relationship="Self.FK_Abonents_equipment_Abonents" FromRole="Abonents" ToRole="Abonents_equipment" />
+          <NavigationProperty Name="Applications" Relationship="Self.FK_Applications_Abonents" FromRole="Abonents" ToRole="Applications" />
+          <NavigationProperty Name="Contracts" Relationship="Self.FK_Contracts_Abonents" FromRole="Abonents" ToRole="Contracts" />
+          <NavigationProperty Name="Services" Relationship="Self.FK_Services_Abonents" FromRole="Abonents" ToRole="Services" />
+        </EntityType>
+        <EntityType Name="Abonents_equipment">
+          <Key>
+            <PropertyRef Name="id_equipment" />
+          </Key>
+          <Property Name="id_equipment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="75" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="count_portov" Type="Int32" Nullable="false" />
+          <Property Name="standart_transmission" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="speed_transmission" Type="Double" Nullable="false" />
+          <Property Name="id_abonent" Type="Int32" />
+          <NavigationProperty Name="Abonents" Relationship="Self.FK_Abonents_equipment_Abonents" FromRole="Abonents_equipment" ToRole="Abonents" />
+        </EntityType>
+        <EntityType Name="Applications">
+          <Key>
+            <PropertyRef Name="id_application" />
+          </Key>
+          <Property Name="id_application" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_abonent" Type="Int32" Nullable="false" />
+          <Property Name="id_name_service" Type="Int32" Nullable="false" />
+          <Property Name="date_create" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="type_problem" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="opisanie" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="date_end" Type="DateTime" Precision="0" />
+          <Property Name="id_staff" Type="Int32" />
+          <NavigationProperty Name="Abonents" Relationship="Self.FK_Applications_Abonents" FromRole="Applications" ToRole="Abonents" />
+          <NavigationProperty Name="name_service" Relationship="Self.FK_Applications_name_service" FromRole="Applications" ToRole="name_service" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Applications_Staff" FromRole="Applications" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Contracts">
+          <Key>
+            <PropertyRef Name="id_cotract" />
+          </Key>
+          <Property Name="id_cotract" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date_start" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="date_end" Type="DateTime" Precision="0" />
+          <Property Name="reason_end" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="id_abonent" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Abonents" Relationship="Self.FK_Contracts_Abonents" FromRole="Contracts" ToRole="Abonents" />
+        </EntityType>
+        <EntityType Name="name_service">
+          <Key>
+            <PropertyRef Name="id_name_service" />
+          </Key>
+          <Property Name="id_name_service" Type="Int32" Nullable="false" />
+          <Property Name="name_service1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Applications" Relationship="Self.FK_Applications_name_service" FromRole="name_service" ToRole="Applications" />
+          <NavigationProperty Name="Services" Relationship="Self.FK_Services_name_service" FromRole="name_service" ToRole="Services" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name_role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Staff" Relationship="Self.FK_Staff_Roles" FromRole="Roles" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Services">
+          <Key>
+            <PropertyRef Name="id_service" />
+          </Key>
+          <Property Name="id_service" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_abonent" Type="Int32" Nullable="false" />
+          <Property Name="id_name_service" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Abonents" Relationship="Self.FK_Services_Abonents" FromRole="Services" ToRole="Abonents" />
+          <NavigationProperty Name="name_service" Relationship="Self.FK_Services_name_service" FromRole="Services" ToRole="name_service" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="id_staff" />
+          </Key>
+          <Property Name="id_staff" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MIddleName" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="65" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="id_role" Type="Int32" Nullable="false" />
+          <Property Name="photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="otpusk" Type="Boolean" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Applications" Relationship="Self.FK_Applications_Staff" FromRole="Staff" ToRole="Applications" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Staff_Roles" FromRole="Staff" ToRole="Roles" />
+        </EntityType>
+        <Association Name="FK_Abonents_equipment_Abonents">
+          <End Role="Abonents" Type="Self.Abonents" Multiplicity="0..1" />
+          <End Role="Abonents_equipment" Type="Self.Abonents_equipment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Abonents">
+              <PropertyRef Name="id_abonent" />
+            </Principal>
+            <Dependent Role="Abonents_equipment">
+              <PropertyRef Name="id_abonent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Applications_Abonents">
+          <End Role="Abonents" Type="Self.Abonents" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Abonents">
+              <PropertyRef Name="id_abonent" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="id_abonent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contracts_Abonents">
+          <End Role="Abonents" Type="Self.Abonents" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Contracts" Type="Self.Contracts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Abonents">
+              <PropertyRef Name="id_abonent" />
+            </Principal>
+            <Dependent Role="Contracts">
+              <PropertyRef Name="id_abonent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Services_Abonents">
+          <End Role="Abonents" Type="Self.Abonents" Multiplicity="1" />
+          <End Role="Services" Type="Self.Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Abonents">
+              <PropertyRef Name="id_abonent" />
+            </Principal>
+            <Dependent Role="Services">
+              <PropertyRef Name="id_abonent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Applications_name_service">
+          <End Role="name_service" Type="Self.name_service" Multiplicity="1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="name_service">
+              <PropertyRef Name="id_name_service" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="id_name_service" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Applications_Staff">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+          <End Role="Applications" Type="Self.Applications" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="id_staff" />
+            </Principal>
+            <Dependent Role="Applications">
+              <PropertyRef Name="id_staff" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Services_name_service">
+          <End Role="name_service" Type="Self.name_service" Multiplicity="1" />
+          <End Role="Services" Type="Self.Services" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="name_service">
+              <PropertyRef Name="id_name_service" />
+            </Principal>
+            <Dependent Role="Services">
+              <PropertyRef Name="id_name_service" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Staff_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OperatorEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Abonents" EntityType="Self.Abonents" />
+          <EntitySet Name="Abonents_equipment" EntityType="Self.Abonents_equipment" />
+          <EntitySet Name="Applications" EntityType="Self.Applications" />
+          <EntitySet Name="Contracts" EntityType="Self.Contracts" />
+          <EntitySet Name="name_service" EntityType="Self.name_service" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="Services" EntityType="Self.Services" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" />
+          <AssociationSet Name="FK_Abonents_equipment_Abonents" Association="Self.FK_Abonents_equipment_Abonents">
+            <End Role="Abonents" EntitySet="Abonents" />
+            <End Role="Abonents_equipment" EntitySet="Abonents_equipment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Applications_Abonents" Association="Self.FK_Applications_Abonents">
+            <End Role="Abonents" EntitySet="Abonents" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contracts_Abonents" Association="Self.FK_Contracts_Abonents">
+            <End Role="Abonents" EntitySet="Abonents" />
+            <End Role="Contracts" EntitySet="Contracts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Services_Abonents" Association="Self.FK_Services_Abonents">
+            <End Role="Abonents" EntitySet="Abonents" />
+            <End Role="Services" EntitySet="Services" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Applications_name_service" Association="Self.FK_Applications_name_service">
+            <End Role="name_service" EntitySet="name_service" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Applications_Staff" Association="Self.FK_Applications_Staff">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="Applications" EntitySet="Applications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Services_name_service" Association="Self.FK_Services_name_service">
+            <End Role="name_service" EntitySet="name_service" />
+            <End Role="Services" EntitySet="Services" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Staff_Roles" Association="Self.FK_Staff_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище OperatorModelContainer" CdmEntityContainer="OperatorEntities1">
+          <EntitySetMapping Name="Abonents">
+            <EntityTypeMapping TypeName="OperatorModel.Abonents">
+              <MappingFragment StoreEntitySet="Abonents">
+                <ScalarProperty Name="id_abonent" ColumnName="id_abonent" />
+                <ScalarProperty Name="personal_schet" ColumnName="personal_schet" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="passport_data" ColumnName="passport_data" />
+                <ScalarProperty Name="adress" ColumnName="adress" />
+                <ScalarProperty Name="number_phone" ColumnName="number_phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Abonents_equipment">
+            <EntityTypeMapping TypeName="OperatorModel.Abonents_equipment">
+              <MappingFragment StoreEntitySet="Abonents_equipment">
+                <ScalarProperty Name="id_equipment" ColumnName="id_equipment" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="count_portov" ColumnName="count_portov" />
+                <ScalarProperty Name="standart_transmission" ColumnName="standart_transmission" />
+                <ScalarProperty Name="speed_transmission" ColumnName="speed_transmission" />
+                <ScalarProperty Name="id_abonent" ColumnName="id_abonent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Applications">
+            <EntityTypeMapping TypeName="OperatorModel.Applications">
+              <MappingFragment StoreEntitySet="Applications">
+                <ScalarProperty Name="id_application" ColumnName="id_application" />
+                <ScalarProperty Name="id_abonent" ColumnName="id_abonent" />
+                <ScalarProperty Name="id_name_service" ColumnName="id_name_service" />
+                <ScalarProperty Name="date_create" ColumnName="date_create" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="type_problem" ColumnName="type_problem" />
+                <ScalarProperty Name="opisanie" ColumnName="opisanie" />
+                <ScalarProperty Name="date_end" ColumnName="date_end" />
+                <ScalarProperty Name="id_staff" ColumnName="id_staff" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contracts">
+            <EntityTypeMapping TypeName="OperatorModel.Contracts">
+              <MappingFragment StoreEntitySet="Contracts">
+                <ScalarProperty Name="id_cotract" ColumnName="id_cotract" />
+                <ScalarProperty Name="date_start" ColumnName="date_start" />
+                <ScalarProperty Name="date_end" ColumnName="date_end" />
+                <ScalarProperty Name="reason_end" ColumnName="reason_end" />
+                <ScalarProperty Name="id_abonent" ColumnName="id_abonent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="name_service">
+            <EntityTypeMapping TypeName="OperatorModel.name_service">
+              <MappingFragment StoreEntitySet="name_service">
+                <ScalarProperty Name="id_name_service" ColumnName="id_name_service" />
+                <ScalarProperty Name="name_service1" ColumnName="name_service" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="OperatorModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+                <ScalarProperty Name="name_role" ColumnName="name_role" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services">
+            <EntityTypeMapping TypeName="OperatorModel.Services">
+              <MappingFragment StoreEntitySet="Services">
+                <ScalarProperty Name="id_service" ColumnName="id_service" />
+                <ScalarProperty Name="id_abonent" ColumnName="id_abonent" />
+                <ScalarProperty Name="id_name_service" ColumnName="id_name_service" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staff">
+            <EntityTypeMapping TypeName="OperatorModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="id_staff" ColumnName="id_staff" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MIddleName" ColumnName="MIddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="otpusk" ColumnName="otpusk" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
