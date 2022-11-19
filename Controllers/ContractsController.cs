@@ -13,44 +13,44 @@ using ServerApi.Сlasses;
 
 namespace ServerApi.Controllers
 {
-    public class AbonentsController : ApiController
+    public class ContractsController : ApiController
     {
         private OperatorEntities1 db = new OperatorEntities1();
 
-        // GET: api/Abonents
-        public IHttpActionResult GetAbonents()
+        // GET: api/Contracts
+        public IHttpActionResult GetContracts()
         {
-            return Ok(db.Abonents.ToList().ConvertAll(x => new ResponseAbonents(x)));
+            return Ok(db.Contracts.ToList().ConvertAll(x => new ResponseContracts(x)));
         }
 
-        // GET: api/Abonents/5
-        [ResponseType(typeof(Abonents))]
-        public IHttpActionResult GetAbonents(int id)
+        // GET: api/Contracts/5
+        [ResponseType(typeof(Contracts))]
+        public IHttpActionResult GetContracts(int id)
         {
-            var abonents = db.Abonents.Where(x => x.id_abonent == id).ToList();
-            if (abonents == null)
+            var contracts = db.Contracts.Where(x => x.id_abonent == id).ToList();
+            if (contracts == null)
             {
                 return NotFound();
             }
 
-            return Ok(abonents.ConvertAll(x => new ResponseAbonents(x)));
+            return Ok(contracts.ConvertAll(x => new ResponseContracts(x)));
         }
 
-        // PUT: api/Abonents/5
+        // PUT: api/Contracts/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutAbonents(int id, Abonents abonents)
+        public IHttpActionResult PutContracts(int id, Contracts contracts)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != abonents.id_abonent)
+            if (id != contracts.id_cotract)
             {
                 return BadRequest();
             }
 
-            db.Entry(abonents).State = EntityState.Modified;
+            db.Entry(contracts).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +58,7 @@ namespace ServerApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AbonentsExists(id))
+                if (!ContractsExists(id))
                 {
                     return NotFound();
                 }
@@ -71,35 +71,35 @@ namespace ServerApi.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Abonents
-        [ResponseType(typeof(Abonents))]
-        public IHttpActionResult PostAbonents(Abonents abonents)
+        // POST: api/Contracts
+        [ResponseType(typeof(Contracts))]
+        public IHttpActionResult PostContracts(Contracts contracts)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Abonents.Add(abonents);
+            db.Contracts.Add(contracts);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = abonents.id_abonent }, abonents);
+            return CreatedAtRoute("DefaultApi", new { id = contracts.id_cotract }, contracts);
         }
 
-        // DELETE: api/Abonents/5
-        [ResponseType(typeof(Abonents))]
-        public IHttpActionResult DeleteAbonents(int id)
+        // DELETE: api/Contracts/5
+        [ResponseType(typeof(Contracts))]
+        public IHttpActionResult DeleteContracts(int id)
         {
-            var abonent = db.Abonents.FirstOrDefault(x => x.id_abonent == id);
-            if (abonent == null)
+            var contracts = db.Contracts.FirstOrDefault(x => x.id_cotract == id);
+            if (contracts == null)
             {
                 return NotFound();
             }
 
-            db.Abonents.Remove(abonent);
+            db.Contracts.Remove(contracts);
             db.SaveChanges();
 
-            return Ok(abonent);
+            return Ok(contracts);
         }
 
         protected override void Dispose(bool disposing)
@@ -111,9 +111,9 @@ namespace ServerApi.Controllers
             base.Dispose(disposing);
         }
 
-        private bool AbonentsExists(int id)
+        private bool ContractsExists(int id)
         {
-            return db.Abonents.Count(e => e.id_abonent == id) > 0;
+            return db.Contracts.Count(e => e.id_cotract == id) > 0;
         }
     }
 }
