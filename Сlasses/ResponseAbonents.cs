@@ -9,7 +9,7 @@ namespace ServerApi.Сlasses
     public class ResponseAbonents
     {
         public ResponseAbonents(Abonents abonents)
-            {
+        {
             id_abonent = abonents.id_abonent;
             personal_schet = abonents.personal_schet;
             Name = abonents.Name;

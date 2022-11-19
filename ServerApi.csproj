@@ -168,6 +168,10 @@
     <Compile Include="Controllers\ApplicationsController.cs" />
     <Compile Include="Controllers\ContractsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\name_serviceController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\ServicesController.cs" />
+    <Compile Include="Controllers\StaffsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -212,10 +216,14 @@
       <DependentUpon>Connector.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Сlasses\ResponceServices.cs" />
+    <Compile Include="Сlasses\ResponceStaff.cs" />
     <Compile Include="Сlasses\ResponseAbonents.cs" />
     <Compile Include="Сlasses\ResponseAbonents_equipment.cs" />
     <Compile Include="Сlasses\ResponseApplications.cs" />
     <Compile Include="Сlasses\ResponseContracts.cs" />
+    <Compile Include="Сlasses\ResponseName_service.cs" />
+    <Compile Include="Сlasses\ResponseRoles.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
