@@ -22,7 +22,7 @@ namespace ServerApi.Controllers
         {
             return Ok(db.Contracts.ToList().ConvertAll(x => new ResponseContracts(x)));
         }
-
+        
         // GET: api/Contracts/5
         [ResponseType(typeof(Contracts))]
         public IHttpActionResult GetContracts(int id)
