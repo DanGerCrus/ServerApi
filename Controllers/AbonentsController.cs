@@ -38,43 +38,31 @@ namespace ServerApi.Controllers
 
         // PUT: api/Abonents/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutAbonents(int id, Abonents abonents)
+        public IHttpActionResult PutAbonents(Abonents abonents)
         {
-            if (!ModelState.IsValid)
+            var abonent = db.Abonents.FirstOrDefault(x => x.id_abonent == abonents.id_abonent);
+            if (abonent == null)
             {
-                return BadRequest(ModelState);
-            }
+                return Ok("Не найден");
 
-            if (id != abonents.id_abonent)
-            {
-                return BadRequest();
             }
+            abonent.Name = abonents.Name;
+            abonent.MiddleName = abonents.MiddleName;
+            abonent.LastName = abonents.LastName;
+            db.SaveChangesAsync();
+            return Ok(abonent);
 
-            db.Entry(abonents).State = EntityState.Modified;
 
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!AbonentsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return StatusCode(HttpStatusCode.NoContent);
         }
 
         // POST: api/Abonents
         [ResponseType(typeof(Abonents))]
         public IHttpActionResult PostAbonents(Abonents abonents)
         {
+            abonents.number_phone = "+79245623241";
+            abonents.passport_data = "4561 1234";
+            abonents.adress = "чкалдоыфшар 87";
+            abonents.personal_schet = "1234";
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
